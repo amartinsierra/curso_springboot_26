@@ -20,6 +20,6 @@ public interface ItemsRepository extends JpaRepository<ItemEntity, Integer> {
 	
 	Optional<ItemEntity> findFirstByUrl(String url);
 	//@Query("select count(i) from ItemEntity i where i.tematica=?1")
-	@Query(value="select count(*) from items where tematica=?",nativeQuery = true)
+	@Query(value="select count(*) from items where tematica=?1",nativeQuery = true)
 	int totalPorTematica(String tematica);
 }
