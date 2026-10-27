@@ -1,46 +1,50 @@
 package com.minsait.buscador.init.service.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.minsait.buscador.init.entities.ItemEntity;
 import com.minsait.buscador.init.exceptions.UrlRepetidaException;
+import com.minsait.buscador.init.mappers.MapeadorObjetos;
 import com.minsait.buscador.init.model.Item;
+import com.minsait.buscador.init.repository.ItemsRepository;
 import com.minsait.buscador.init.service.ItemsService;
 @Service
 public class ItemsServiceImpl implements ItemsService {
-	static List<Item> direcciones=new ArrayList<>(Arrays.asList(new Item("http://www.amazon.es","libros","web de libros y más cosas"),
-			new Item("http://www.fnac.es","libros","libreria completa"),
-			new Item("http://www.travel.es","viajes","viajes por el mundo"),
-			new Item("http://www.game.es","juegos","el mundo del juego"),
-			new Item("http://www.fly.com","viajes","vuelos a todos los destinos"),
-			new Item("http://www.casadellibro.es","libros","libros de todos los temas")
-			));
+	
+	ItemsRepository itemsRepository;
+	MapeadorObjetos mapper;
+	
+	public ItemsServiceImpl(ItemsRepository itemsRepository, MapeadorObjetos mapper) {
+		this.itemsRepository = itemsRepository;
+		this.mapper = mapper;
+	}
 	@Override
 	public List<Item> buscar(String tematica) {
-		return direcciones.stream()
-				.filter(item -> item.tematica().contains(tematica))
+		return itemsRepository.findByTematica(tematica) //List<ItemEntity>
+				.stream()
+				.map(e->mapper.entityToDto(e))
 				.toList();
 	}
 	@Override
 	public Optional<Item> alta(Item item) {
-		//da de alta si no existe esa URL
-		if(direcciones.stream().anyMatch(it->it.url().equals(item.url()))) {
+		Optional<ItemEntity> optEntity=itemsRepository.findFirstByUrl(item.url());
+		if(optEntity.isPresent()) {
 			throw new UrlRepetidaException();
 		}
-		direcciones.add(item);
-		return Optional.of(item);
+		ItemEntity entity= itemsRepository.save(mapper.dtoToEntity(item));
+		return Optional.of(mapper.entityToDto(entity));
 	}
 	@Override
 	public Optional<Item> eliminar(String url) {
-		Optional<Item> obj= direcciones.stream().filter(it->it.url().equals(url)).findFirst();
-		if(obj.isPresent()) {
-			direcciones.removeIf(it->it.url().equals(url));
+		Optional<ItemEntity> optEntity=itemsRepository.findFirstByUrl(url);
+		if(optEntity.isPresent()) {
+			itemsRepository.deleteByUrl(url);
 		}
-		return obj;
+		//transforma un optional de entidad en un optional de dto
+		return optEntity.map(e->mapper.entityToDto(e));
 	}
 
 }
