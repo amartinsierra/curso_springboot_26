@@ -8,7 +8,7 @@ import com.minsait.estudiantes.init.model.Estudiante;
 @Component
 public class Mapeador {
 	public Alumno estudianteToAlumno(Estudiante estudiante) {
-		return new Alumno(0,estudiante.nombre(),estudiante.curso(),estudiante.email(),estudiante.calificacion());
+		return new Alumno(estudiante.nombre(),estudiante.curso(),estudiante.email(),estudiante.calificacion());
 		
 	}
 	public Estudiante alumnoToEstudiante(Alumno alumno) {
