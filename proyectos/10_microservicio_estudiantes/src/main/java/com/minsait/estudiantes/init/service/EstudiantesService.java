@@ -3,6 +3,7 @@ package com.minsait.estudiantes.init.service;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -17,7 +18,8 @@ import com.minsait.estudiantes.init.model.Estudiante;
 public class EstudiantesService {
 	RestClient restClient;
 	Mapeador mapeador;
-	private String url="http://localhost:8001/alumnos";
+	@Value("${url.remote}")
+	private String url;
 	public EstudiantesService(RestClient restClient, Mapeador mapeador) {
 		this.restClient = restClient;
 		this.mapeador = mapeador;
