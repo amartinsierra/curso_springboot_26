@@ -3,8 +3,8 @@ package com.cursospringboot.init.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -18,7 +18,7 @@ public class PedidosServiceImpl implements PedidosService {
 	String url;
 	
 	//************constructor
-	public PedidosServiceImpl(@LoadBalanced RestClient.Builder builder, PedidosDao pedidosDao) {
+	public PedidosServiceImpl(@Qualifier("loadBalanced") RestClient.Builder builder, PedidosDao pedidosDao) {
 		this.restClient = builder.build();
 		this.pedidosDao = pedidosDao;
 	}

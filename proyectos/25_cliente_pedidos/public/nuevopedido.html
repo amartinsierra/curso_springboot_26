@@ -66,14 +66,14 @@
 			
 			$scope.cargarProductos=function(){				
 				
-				let url = "http://localhost:8000/productos";	
+				let url = "http://localhost:10000/sproductos/productos";	
 				$http.get(url).then(function(res){
 					$scope.productos=res.data;								
 				});
 			}
 			$scope.pedido=function(){
 				
-				let url="http://localhost:7000/pedidos";
+				let url="http://localhost:10000/spedidos/pedidos";
 				let ob=new Object();
 				ob.codigoProducto=$scope.producto;
 				ob.unidades=$scope.unidades;

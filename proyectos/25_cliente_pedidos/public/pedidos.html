@@ -40,7 +40,7 @@
 		app.controller("comunicacionController",function($scope,$http){
 			$scope.pedidos=[];	
 			$scope.cargar=function(){				
-				let url="http://localhost:7000/pedidos";
+				let url="http://localhost:10000/spedidos/pedidos";
 				$http.get(url).then(function(res){
 					$scope.pedidos=res.data;			
 				});
