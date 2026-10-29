@@ -18,7 +18,10 @@ public class PedidosServiceImpl implements PedidosService {
 	String url;
 	
 	//************constructor
-
+	public PedidosServiceImpl(@LoadBalanced RestClient.Builder builder, PedidosDao pedidosDao) {
+		this.restClient = builder.build();
+		this.pedidosDao = pedidosDao;
+	}
 	@Override
 	public List<Pedido> pedidos() {
 		return pedidosDao.findAll();
@@ -47,6 +50,9 @@ public class PedidosServiceImpl implements PedidosService {
 	}
 	private void actualizarProducto(int codigoProducto, int unidades) {
 		//******************
-		
+		restClient.put()
+		.uri(url+codigoProducto+"/"+unidades)
+		.retrieve()
+		.toBodilessEntity();
 	}
 }

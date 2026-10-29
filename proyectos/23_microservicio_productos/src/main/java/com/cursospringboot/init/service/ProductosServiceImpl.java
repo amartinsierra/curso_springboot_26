@@ -5,21 +5,28 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.cursospringboot.init.dtos.ProductoDto;
 import com.cursospringboot.init.exceptions.ProductoNoActualizableException;
 import com.cursospringboot.init.exceptions.ProductoNoExistenteException;
+import com.cursospringboot.init.mappers.Mapeador;
 import com.cursospringboot.init.model.Producto;
 import com.cursospringboot.init.repository.ProductosDao;
 @Service
 public class ProductosServiceImpl implements ProductosService {
 	ProductosDao productosDao;
+	Mapeador mapeador;
 	
-	public ProductosServiceImpl(ProductosDao productosDao) {
+
+	public ProductosServiceImpl(ProductosDao productosDao, Mapeador mapeador) {
 		this.productosDao = productosDao;
+		this.mapeador = mapeador;
 	}
 
 	@Override
 	public List<ProductoDto> productos() {
-		//******************
+		return productosDao.findAll().stream()
+				.map(mapeador::toDto)
+				.toList();
 	}
 
 	@Override
@@ -36,6 +43,10 @@ public class ProductosServiceImpl implements ProductosService {
 		Optional<Producto> opProducto=productosDao.findById(codigoProducto);
 		if(opProducto.isPresent()&&unidades<=opProducto.get().getStock()) {
 			//****************
+			Producto p=opProducto.get();
+			p.setStock(p.getStock()-unidades);
+			productosDao.save(p);
+			return;
 		}
 		throw new ProductoNoActualizableException("No se pudo actualizar stock");
 

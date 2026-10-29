@@ -8,4 +8,5 @@ import com.cursospringboot.init.model.Producto;
 
 public interface ProductosDao extends JpaRepository<Producto, Integer> {
 	//**************falta un método
+	List<Producto> findByPrecioUnitarioBetween(double min, double max);
 }

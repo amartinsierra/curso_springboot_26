@@ -27,5 +27,10 @@ public class PedidosController {
 	@PostMapping(value="pedidos")
 	public ResponseEntity<Void> altaPedido(@RequestBody Pedido pedido) {
 		//*****si no se pudo dar de alta, conflicto
+		if(pedidosService.altaPedido(pedido)) {
+			return  ResponseEntity.ok().build();
+		}else {
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
 	}
 }

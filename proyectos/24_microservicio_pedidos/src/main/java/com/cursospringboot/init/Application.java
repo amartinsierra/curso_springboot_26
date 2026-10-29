@@ -15,4 +15,14 @@ public class Application {
 	}
 	
 	//**************configuración RestClient
+	@Bean
+    @LoadBalanced
+    public RestClient.Builder loadBalanced(){
+        return RestClient.builder();
+    }
+    @Bean
+    @Primary
+    public RestClient.Builder builder(){
+        return RestClient.builder();
+    }
 }
