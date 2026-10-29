@@ -65,6 +65,7 @@ public class EstudiantesService implements InitializingBean{
 			.toBodilessEntity();
 		}
 		catch(HttpClientErrorException ex) {
+			ex.printStackTrace();
 			throw new EstudianteRepetidoException();
 		}
 	}
