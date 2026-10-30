@@ -1,0 +1,42 @@
+spring:
+  profiles:
+    active:
+    - prod
+---
+spring:
+  application:
+    name: servicio-estudiantes
+  config:
+    activate:
+      on-profile:
+      - dev
+server:
+  port: 9000
+url:
+  remote:
+    login: http://servicio-alumnos/login
+    user: user1
+    password: user1
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+---
+spring:
+  application:
+    name: servicio-estudiantes
+  config:
+    activate:
+      on-profile:
+      - prod
+server:
+  port: 9000
+url:
+  remote:
+    login: http://servicio-alumnos/login
+    user: ${REMOTE_USER}
+    password: ${REMOTE_PASS}
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${HOST_EUREKA}:8761/eureka

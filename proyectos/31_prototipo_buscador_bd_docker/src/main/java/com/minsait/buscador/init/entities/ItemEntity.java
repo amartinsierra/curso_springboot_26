@@ -1,0 +1,61 @@
+package com.minsait.buscador.init.entities;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="items")
+public class ItemEntity {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int idItem;
+	@Column(name = "url")
+	private String url;
+	private String tematica;
+	private String descripcion;
+	public ItemEntity(int idItem, String url, String tematica, String descripcion) {
+		super();
+		this.idItem = idItem;
+		this.url = url;
+		this.tematica = tematica;
+		this.descripcion = descripcion;
+	}
+	public ItemEntity(String url, String tematica, String descripcion) {
+		super();
+		this.url = url;
+		this.tematica = tematica;
+		this.descripcion = descripcion;
+	}
+	public ItemEntity() {
+		super();
+	}
+	public int getIdItem() {
+		return idItem;
+	}
+	public void setIdItem(int idItem) {
+		this.idItem = idItem;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public String getTematica() {
+		return tematica;
+	}
+	public void setTematica(String tematica) {
+		this.tematica = tematica;
+	}
+	public String getDescripcion() {
+		return descripcion;
+	}
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+	
+}

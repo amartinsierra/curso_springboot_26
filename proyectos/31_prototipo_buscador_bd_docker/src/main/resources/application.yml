@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: 02_prototipo_buscador
+  jpa:
+    hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  profiles:
+    active:
+    - prod
+server:
+  port: 8000
+---
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/buscador
+    username: root
+    password: root	
+  config:
+    activate:
+      on-profile:
+      - dev
+---
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${HOST_DB}:${PORT_DB}/buscador
+    username: ${USER_DB}
+    password: ${PASS_DB}
+  config:
+    activate:
+      on-profile:
+      - prod
