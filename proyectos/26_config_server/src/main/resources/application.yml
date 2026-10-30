@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: 26_config_server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/amartinsierra/config_repo_curso
+server:
+  port: 8888
