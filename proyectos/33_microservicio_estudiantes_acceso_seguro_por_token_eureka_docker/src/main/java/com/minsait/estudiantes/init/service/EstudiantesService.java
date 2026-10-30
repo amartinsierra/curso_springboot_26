@@ -22,7 +22,7 @@ import com.minsait.estudiantes.init.model.Estudiante;
 public class EstudiantesService implements InitializingBean{
 	RestClient restClient;
 	Mapeador mapeador;
-	@Value("${url.remote}")
+	@Value("${url.remote.url}")
 	private String url;
 	@Value("${url.remote.user}")
 	private String userRemote;

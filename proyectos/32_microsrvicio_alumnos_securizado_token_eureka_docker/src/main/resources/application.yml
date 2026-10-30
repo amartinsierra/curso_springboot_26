@@ -42,7 +42,7 @@ spring:
     name: servicio-alumnos
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://{HOST_DB}:{PORT_DB}/alumnoscursos
+    url: jdbc:mysql://${HOST_DB}:${PORT_DB}/alumnoscursos
     username: ${USER_DB}
     password: ${PASS_DB:root}
   jpa:
@@ -59,7 +59,7 @@ server:
 security:
   db:
     driver: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://{HOST_DB}:{PORT_DB}/springsecurity
+    url: jdbc:mysql://${HOST_DB}:${PORT_DB}/springsecurity
     user: ${USER_DB}
     password: ${PASS_DB}
 jwt:
@@ -70,3 +70,6 @@ eureka:
   client:
     service-url:
       defaultZone: http://${HOST_EUREKA}:8761/eureka
+  instance:
+    hostname: ${HOST_DESTINO}
+    non-secure-port: ${PORT_DESTINO}

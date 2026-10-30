@@ -1,0 +1,81 @@
+spring:
+  profiles:
+    active:
+    - dev
+---
+spring:
+  application:
+    name: servicio-alumnos
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/alumnoscursos
+    username: root
+    password: ${PASS_DB:root}
+  jpa:
+    hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  config:
+    activate:
+      on-profile:
+      - dev
+server:
+  port: 8080
+security:
+  db:
+    driver: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/springsecurity
+    user: root
+    password: root
+jwt:
+  properties:
+    clave: 11111111111111111111111111aaaaaaaaaaaaaaaaaaaaa
+    timeout: 84000000
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+
+---
+spring:
+  application:
+    name: servicio-alumnos
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${HOST_DB}:${PORT_DB}/alumnoscursos
+    username: ${USER_DB}
+    password: ${PASS_DB:root}
+  jpa:
+    hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  config:
+    activate:
+      on-profile:
+      - prod
+server:
+  port: 8080
+security:
+  db:
+    driver: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${HOST_DB}:${PORT_DB}/springsecurity
+    user: ${USER_DB}
+    password: ${PASS_DB}
+jwt:
+  properties:
+    clave: 11111111111111111111111111aaaaaaaaaaaaaaaaaaaaa
+    timeout: 84000000
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${HOST_EUREKA}:8761/eureka
+  instance:
+    hostname: ${HOST_DESTINO}
+    non-secure-port: ${PORT_DESTINO}
